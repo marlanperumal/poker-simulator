@@ -11,6 +11,16 @@ class Deck(object):
                 self.cards.append(card)
         self.shuffled = False
 
+    def __contains__(self, item):
+        return item in self.cards
+
+    def copy(self):
+        deck = Deck()
+        deck.shuffled = self.shuffled
+        if deck.shuffled:
+            deck.cards = [Card(card.rank_id, card.suit_id) for card in self.cards]
+        return deck
+
     def size(self):
         return len(self.cards)
 
@@ -18,45 +28,23 @@ class Deck(object):
         random.shuffle(self.cards)
         self.shuffled = True
 
-    def sample_one(self):
-        return self.sample()[0]
+    def sample(self, num_cards=None):
+        if num_cards is not None:
+            return random.sample(self.cards, num_cards)
+        else:
+            return self.sample(1)[0]
 
-    def sample(self, num_cards):
-        return random.sample(self.cards, num_cards)
-
-    def deal_one(self):
+    def deal(self, num_cards=None):
         if not self.shuffled:
             self.shuffle()
-        return self.cards.pop()
 
-    def deal(self, num_cards):
-        if not self.shuffled:
-            self.shuffle()
-        cards = self.cards[-num_cards:]
-        self.cards = self.cards[:len(self.cards)-num_cards]
-        return cards
+        if num_cards is not None:
+            cards = self.cards[-num_cards:]
+            self.cards = self.cards[:len(self.cards)-num_cards]
+            return cards
+        else:
+            return self.cards.pop()
 
 
-if __name__ == "__main__":
-    deck = Deck()
-    print(deck.deal_one())
-    print(deck.size())
-    print(deck.deal(2))
-    print(deck.size())
-    hand = deck.deal(2)
-    print(hand)
-    hand = [Card(1, 1), Card(1, 2)]
-    print(hand)
-    print(hand[0] < hand[1])
-    print(hand[0] <= hand[1])
-    print(hand[0] > hand[1])
-    print(hand[0] >= hand[1])
-    print(hand[0] == hand[1])
-    print(hand[0] != hand[1])
-    hand = deck.deal(5)
-    print(hand)
-    hand.sort()
-    print(hand)
-    hand.sort(reverse=True)
-    print(hand)
+
 
