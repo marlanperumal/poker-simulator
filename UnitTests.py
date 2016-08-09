@@ -1,6 +1,7 @@
 import unittest
 from Card import Card
 from Deck import Deck
+from Hand import Hand
 
 
 class TestCard(unittest.TestCase):
@@ -89,12 +90,19 @@ class TestHand(unittest.TestCase):
     def setUp(self):
         self.deck = Deck()
         self.deck.shuffle()
-        hand = deck.deal(5)
+        self.hand = Hand(self.deck.deal(5))
+
+    def test__iter__(self):
+        for card1, card2 in zip(self.hand, self.hand.cards):
+            self.assertEqual(card1, card2)
+
 
 card_suite = unittest.TestLoader().loadTestsFromTestCase(TestCard)
 deck_suite = unittest.TestLoader().loadTestsFromTestCase(TestDeck)
+hand_suite = unittest.TestLoader().loadTestsFromTestCase(TestHand)
 all_tests = unittest.TestSuite([
     card_suite,
-    deck_suite
+    deck_suite,
+    hand_suite
 ])
 unittest.TextTestRunner(verbosity=2).run(all_tests)
