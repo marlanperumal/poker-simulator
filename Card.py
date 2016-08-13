@@ -29,12 +29,20 @@ class Card(object):
 
     suit_dict = {suit: index for suit, index in enumerate(suit_list)}
 
-    def __init__(self, rank_id, suit_id):
-        self.rank_id = rank_id
-        self.suit_id = suit_id
+    def __init__(self, rank, suit):
+        if type(rank) == int:
+            self.rank_id = rank
+            self.rank = Card.rank_list[rank]
+        else:
+            self.rank = rank
+            self.rank_id = Card.rank_list.index(rank)
 
-        self.rank = Card.rank_list[rank_id]
-        self.suit = Card.suit_list[suit_id]
+        if type(suit) == int:
+            self.suit_id = suit
+            self.suit = Card.suit_list[suit]
+        else:
+            self.suit = suit
+            self.suit_id = Card.suit_list.index(suit)
         self.name = self.rank + ' of ' + self.suit
 
     def copy(self):
