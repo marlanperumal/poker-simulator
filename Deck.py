@@ -45,6 +45,9 @@ class Deck(object):
         else:
             return self.cards.pop()
 
+    def extract(self, cards):
+        self.cards = list(set(self.cards) - set(cards))
+
 
 
 

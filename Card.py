@@ -51,6 +51,12 @@ class Card(object):
     def __repr__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
+
+    def __hash__(self):
+        return hash(str(self))
+
     def __eq__(self, other):
         return self.rank_id == other.rank_id and self.suit_id == other.suit_id
 

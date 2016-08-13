@@ -29,8 +29,9 @@ class Hand(object):
         "Straight Flush"
     ]
 
-    def __init__(self, cards=None, final_hand_size=5):
+    def __init__(self, cards=None, final_hand_size=5, max_cards=7):
         self.final_hand_size = final_hand_size
+        self.max_cards = max_cards
         if cards is not None:
             self.cards = cards
         else:
@@ -88,13 +89,21 @@ class Hand(object):
         hand.calc_rank()
         return hand
 
+    @property
     def size(self):
         return len(self.cards)
 
     def add_card(self, card):
-        if self.size() < self.max_size:
+        if self.size < self.max_cards:
             self.cards.append(card)
         self.sort()
+
+    def add_cards(self, cards):
+        self.cards = self.cards + cards
+        if self.size > self.max_cards:
+            raise Exception("Too many cards")
+        self.sort()
+
 
     def play_card(self, card_num):
         return self.cards.pop(card_num)
@@ -149,7 +158,7 @@ class Hand(object):
             self.tricks["High Card"] = Trick("High Card", trick_cards)
 
         if len(pairs) > 0:
-            trick_cards = singles[-1]
+            trick_cards = pairs[-1]
             card_rank = trick_cards[0].rank_id
             i = 0
             while len(trick_cards) < 5:
@@ -159,7 +168,7 @@ class Hand(object):
             self.tricks["Pair"] = Trick("Pair", trick_cards)
 
         if len(trips) > 0:
-            trick_cards = singles[-1]
+            trick_cards = trips[-1]
             card_rank = trick_cards[0].rank_id
             i = 0
             while len(trick_cards) < 5:
@@ -169,7 +178,7 @@ class Hand(object):
             self.tricks["Trip"] = Trick("Trip", trick_cards)
 
         if len(quads) > 0:
-            trick_cards = singles[-1]
+            trick_cards = quads[-1]
             card_rank = trick_cards[0].rank_id
             i = 0
             while len(trick_cards) < 5:
@@ -193,7 +202,7 @@ class Hand(object):
 
         if len(pairs) >= 1 and len(trips) >=1:
             pair = pairs[-1]
-            trip = pairs[-2]
+            trip = trips[-1]
             trick_cards = trip + pair
             self.tricks["Full House"] = Trick("Full House", trick_cards)
 
