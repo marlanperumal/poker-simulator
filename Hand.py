@@ -56,7 +56,7 @@ class Hand(object):
         if self.rank.trick_type != other.rank.trick_type:
             return False
         else:
-            for self_card, other_card in zip(self.cards, other.cards):
+            for self_card, other_card in zip(self.rank.cards, other.rank.cards):
                 if self_card.rank_id != other_card.rank_id:
                     return False
             return True
@@ -70,10 +70,10 @@ class Hand(object):
         elif Hand.hand_rank.index(self.rank.trick_type) > Hand.hand_rank.index(other.rank.trick_type):
             return False
         else:
-            for self_card, other_card in zip(self.cards, other.cards):
-                if self_card.rank_id < other_card.rank_id:
+            for self_card, other_card in zip(self.rank.cards, other.rank.cards):
+                if self_card < other_card:
                     return True
-                elif self_card.rank_id < other_card.rank_id:
+                elif self_card > other_card:
                     return False
             return False
 
@@ -103,7 +103,6 @@ class Hand(object):
         if self.size > self.max_cards:
             raise Exception("Too many cards")
         self.sort()
-
 
     def play_card(self, card_num):
         return self.cards.pop(card_num)
@@ -136,7 +135,7 @@ class Hand(object):
         trips = []
         quads = []
 
-        for rank in self.card_ranks:
+        for rank in sorted(self.card_ranks, key=lambda rank: Card(rank, 1)):
             cards = self.card_ranks[rank]
             if len(cards) == 1:
                 singles.append(cards)
@@ -148,7 +147,7 @@ class Hand(object):
                 quads.append(cards)
 
         if len(singles) > 0:
-            trick_cards = singles[-1]
+            trick_cards = singles[-1] + []
             card_rank = trick_cards[0].rank_id
             i = 0
             while len(trick_cards) < 5:
@@ -158,7 +157,7 @@ class Hand(object):
             self.tricks["High Card"] = Trick("High Card", trick_cards)
 
         if len(pairs) > 0:
-            trick_cards = pairs[-1]
+            trick_cards = pairs[-1] + []
             card_rank = trick_cards[0].rank_id
             i = 0
             while len(trick_cards) < 5:
@@ -168,7 +167,7 @@ class Hand(object):
             self.tricks["Pair"] = Trick("Pair", trick_cards)
 
         if len(trips) > 0:
-            trick_cards = trips[-1]
+            trick_cards = trips[-1] + []
             card_rank = trick_cards[0].rank_id
             i = 0
             while len(trick_cards) < 5:
@@ -178,7 +177,7 @@ class Hand(object):
             self.tricks["Trip"] = Trick("Trip", trick_cards)
 
         if len(quads) > 0:
-            trick_cards = quads[-1]
+            trick_cards = quads[-1] + []
             card_rank = trick_cards[0].rank_id
             i = 0
             while len(trick_cards) < 5:

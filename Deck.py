@@ -39,8 +39,11 @@ class Deck(object):
             self.shuffle()
 
         if num_cards is not None:
-            cards = self.cards[-num_cards:]
-            self.cards = self.cards[:len(self.cards)-num_cards]
+            if num_cards == 0:
+                cards = []
+            else:
+                cards = self.cards[-num_cards:]
+                self.cards = self.cards[:len(self.cards)-num_cards]
             return cards
         else:
             return self.cards.pop()

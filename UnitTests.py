@@ -102,7 +102,16 @@ class TestHand(unittest.TestCase):
             self.assertEqual(card1, card2)
 
     def test_high_card(self):
-        self.hand = Hand([
+        hand_1 = Hand([
+            Card(3, "Spades"),
+            Card(4, "Hearts"),
+            Card(8, "Clubs"),
+            Card(1, "Spades"),
+            Card(12, "Spades"),
+            Card(13, "Hearts"),
+            Card(2, "Diamonds"),
+        ])
+        hand_2 = Hand([
             Card(3, "Spades"),
             Card(4, "Hearts"),
             Card(8, "Clubs"),
@@ -111,14 +120,26 @@ class TestHand(unittest.TestCase):
             Card(13, "Hearts"),
             Card(1, "Diamonds"),
         ])
-        self.hand.calc_rank()
-        self.assertFalse(self.hand.rank.trick_type == "High Card")
+        hand_1.calc_rank()
+        hand_2.calc_rank()
+        self.assertTrue(hand_1.rank.trick_type == "High Card")
+        self.assertFalse(hand_2.rank.trick_type == "High Card")
 
     def test_pair(self):
         pass
 
     def test_two_pair(self):
-        pass
+        hand_1 = Hand([
+            Card(7, "Diamonds"),
+            Card(2, "Hearts"),
+            Card(5, "Clubs"),
+            Card(2, "Diamonds"),
+            Card(4, "Spades"),
+            Card(7, "Spades"),
+            Card(6, "Diamonds")
+        ])
+        hand_1.calc_rank()
+        self.assertTrue(hand_1.rank.trick_type == "Two Pair")
 
     def test_trip(self):
         pass
