@@ -1,6 +1,6 @@
-from Deck import Deck
-from Hand import Hand
-from Card import Card
+from .Deck import Deck
+from .Hand import Hand
+from .Card import Card
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -77,7 +77,7 @@ class HandProbability(object):
         return record
 
 if __name__ == "__main__":
-    simulation = HandProbability(num_players=6, default_repeats=1000)
+    simulation = HandProbability(num_players=6, default_repeats=100)
     probability_matrix = []
     rank_list = Card.rank_list[2:] + Card.rank_list[1:2]
     for i, rank_1 in enumerate(rank_list):

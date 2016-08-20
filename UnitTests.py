@@ -1,7 +1,7 @@
 import unittest
-from Card import Card
-from Deck import Deck
-from Hand import Hand
+from .Card import Card
+from .Deck import Deck
+from .Hand import Hand
 
 
 class TestCard(unittest.TestCase):
