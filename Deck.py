@@ -1,4 +1,4 @@
-from .Card import Card
+from poker_simulator import Card
 import random
 
 

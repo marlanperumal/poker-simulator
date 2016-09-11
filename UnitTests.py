@@ -1,7 +1,5 @@
 import unittest
-from .Card import Card
-from .Deck import Deck
-from .Hand import Hand
+from poker_simulator import Card, Deck, Hand
 
 
 class TestCard(unittest.TestCase):
@@ -162,13 +160,13 @@ class TestHand(unittest.TestCase):
     def test_compare_hand_ranks(self):
         pass
 
-
-card_suite = unittest.TestLoader().loadTestsFromTestCase(TestCard)
-deck_suite = unittest.TestLoader().loadTestsFromTestCase(TestDeck)
-hand_suite = unittest.TestLoader().loadTestsFromTestCase(TestHand)
-all_tests = unittest.TestSuite([
-    card_suite,
-    deck_suite,
-    hand_suite
-])
-unittest.TextTestRunner(verbosity=2).run(all_tests)
+if __name__ == "__main__":
+    card_suite = unittest.TestLoader().loadTestsFromTestCase(TestCard)
+    deck_suite = unittest.TestLoader().loadTestsFromTestCase(TestDeck)
+    hand_suite = unittest.TestLoader().loadTestsFromTestCase(TestHand)
+    all_tests = unittest.TestSuite([
+        card_suite,
+        deck_suite,
+        hand_suite
+    ])
+    unittest.TextTestRunner(verbosity=2).run(all_tests)

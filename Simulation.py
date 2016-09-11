@@ -1,8 +1,4 @@
-from .Deck import Deck
-from .Hand import Hand
-from .Card import Card
-#import numpy as np
-#import matplotlib.pyplot as plt
+from poker_simulator import Deck, Hand, Card
 
 
 class HandProbability(object):
@@ -98,9 +94,4 @@ if __name__ == "__main__":
     print(rank_list)
     for rank in range(len(probability_matrix)):
         print(probability_matrix[rank])
-#    probability_matrix = np.array(probability_matrix)
-#    plt.matshow(probability_matrix, cmap=plt.cm.jet)
-#    plt.colorbar()
-#    plt.show()
-
 
