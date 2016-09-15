@@ -6,9 +6,14 @@
 
 ## Usage
 
-This module is not typically designed to be executed directly from the console, but the following two commands may be useful:
+This package is currently only used in the [Poker App](https://github.com/marlanperumal/poker_app) project. Follow the instructions there for setting up the virtual environment and making this package visible.
 
-* `python Simlutor.py`
-* `python UnitTests.py`
+Whilst in the virtual environment and in this project directory, you can run unit tests with
 
-If these result in an error, you may need to edit your imports to remove any preceding dots. For example, change `import .Card from Card` in all your `*.py` files to `import Card from Card`. Please note that this may break other modules that use this module (so don't check that change in), but it will get it to work stand-alone.
+		python UnitTests.py
+
+Run an example simulation with
+
+		python Simulation.py
+
+The output is the odds table for suited and unsuited starting pairs
